@@ -12,3 +12,7 @@ output "ecs_service_name" {
   description = "The name of the ECS service"
   value       = aws_ecs_service.main.name
 }
+
+output "rds_endpoint" {
+  value = aws_db_instance.main.address
+}

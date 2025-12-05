@@ -63,6 +63,20 @@ resource "aws_ecs_task_definition" "app" {
           hostPort      = var.app_port
         }
       ]
+      environment = [
+        {
+          name  = "SPRING_R2DBC_URL"
+          value = "r2dbc:postgresql://${aws_db_instance.main.address}:5432/${var.db_name}"
+        },
+        {
+          name  = "SPRING_R2DBC_USERNAME"
+          value = var.db_username
+        },
+        {
+          name  = "SPRING_R2DBC_PASSWORD"
+          value = var.db_password
+        }
+      ]
       logConfiguration = {
         logDriver = "awslogs"
         options = {

@@ -54,3 +54,19 @@ variable "image_tag" {
   type        = string
   default     = "latest"
 }
+
+variable "db_name" {
+  description = "Name of the database"
+  default     = "school_app"
+}
+
+variable "db_username" {
+  description = "Database username"
+  default     = "school_admin"
+}
+
+variable "db_password" {
+  description = "Database password"
+  sensitive   = true
+  # No default value to prevent committing secrets to git
+}
