@@ -75,6 +75,7 @@ resource "aws_ecs_service" "gateway" {
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent         = 200
   health_check_grace_period_seconds  = 60
+  force_new_deployment               = true
 
   network_configuration {
     security_groups  = [aws_security_group.ecs_tasks.id]

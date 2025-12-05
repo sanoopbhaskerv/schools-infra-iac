@@ -128,6 +128,7 @@ resource "aws_ecs_service" "main" {
   deployment_maximum_percent         = 200
 
   health_check_grace_period_seconds = 120
+  force_new_deployment               = true
 
   network_configuration {
     security_groups  = [aws_security_group.ecs_tasks.id]
