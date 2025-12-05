@@ -32,6 +32,29 @@ resource "aws_alb_target_group" "app" {
   }
 }
 
+# Gateway Target Group
+resource "aws_alb_target_group" "gateway" {
+  name        = "${var.project_name}-gateway-tg"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.main.id
+  target_type = "ip"
+
+  health_check {
+    healthy_threshold   = "3"
+    interval            = "30"
+    protocol            = "HTTP"
+    matcher             = "200"
+    timeout             = "3"
+    path                = "/actuator/health"
+    unhealthy_threshold = "2"
+  }
+
+  tags = {
+    Name = "${var.project_name}-gateway-tg"
+  }
+}
+
 # Listener
 resource "aws_alb_listener" "front_end" {
   load_balancer_arn = aws_alb.main.id
@@ -39,7 +62,7 @@ resource "aws_alb_listener" "front_end" {
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = aws_alb_target_group.app.id
+    target_group_arn = aws_alb_target_group.gateway.id
     type             = "forward"
   }
 }

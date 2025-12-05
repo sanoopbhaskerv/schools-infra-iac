@@ -55,6 +55,12 @@ variable "image_tag" {
   default     = "latest"
 }
 
+variable "gateway_image_tag" {
+  description = "Docker image tag for gateway service"
+  type        = string
+  default     = "latest"
+}
+
 variable "db_name" {
   description = "Name of the database"
   default     = "school_app"

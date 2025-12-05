@@ -12,6 +12,33 @@ data "aws_ecr_repository" "repo" {
   name = "schools-admin-service"
 }
 
+# Service Discovery Namespace
+resource "aws_service_discovery_private_dns_namespace" "main" {
+  name        = "school.local"
+  description = "Service discovery namespace for school services"
+  vpc         = aws_vpc.main.id
+}
+
+# Service Discovery Service for Admin
+resource "aws_service_discovery_service" "admin" {
+  name = "admin-service"
+
+  dns_config {
+    namespace_id = aws_service_discovery_private_dns_namespace.main.id
+
+    dns_records {
+      ttl  = 10
+      type = "A"
+    }
+
+    routing_policy = "MULTIVALUE"
+  }
+
+  health_check_custom_config {
+    failure_threshold = 1
+  }
+}
+
 # IAM Role for Task Execution
 resource "aws_iam_role" "ecs_task_execution_role" {
   name = "${var.project_name}-ecs-task-execution-role"
@@ -112,6 +139,10 @@ resource "aws_ecs_service" "main" {
     target_group_arn = aws_alb_target_group.app.id
     container_name   = "admin-service"
     container_port   = var.app_port
+  }
+
+  service_registries {
+    registry_arn = aws_service_discovery_service.admin.arn
   }
 
   depends_on = [aws_alb_listener.front_end, aws_iam_role_policy_attachment.ecs_task_execution_role_policy]
