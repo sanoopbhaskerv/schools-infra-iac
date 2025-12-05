@@ -135,11 +135,7 @@ resource "aws_ecs_service" "main" {
     assign_public_ip = true
   }
 
-  load_balancer {
-    target_group_arn = aws_alb_target_group.app.id
-    container_name   = "admin-service"
-    container_port   = var.app_port
-  }
+
 
   service_registries {
     registry_arn = aws_service_discovery_service.admin.arn
