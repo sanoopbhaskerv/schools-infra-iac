@@ -33,7 +33,8 @@ resource "aws_security_group" "ecs_tasks" {
     protocol        = "tcp"
     from_port       = 8082
     to_port         = 8082
-    security_groups = [aws_security_group.alb.id, aws_security_group.ecs_tasks.id] # Allow ALB (legacy) and Self (Gateway)
+    security_groups = [aws_security_group.alb.id]
+    self            = true
   }
 
   ingress {
