@@ -11,10 +11,10 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "schools-terraform-state-1764944709"
+    bucket = "schools-platform-tf-state-588809963619"
     key            = "admin-service/terraform.tfstate"
     region         = "ap-south-1"
-    dynamodb_table = "schools-terraform-locks"
+    dynamodb_table = "schools-platform-tf-locks"
     encrypt        = true
   }
 }
