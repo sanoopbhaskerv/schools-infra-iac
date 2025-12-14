@@ -1,6 +1,5 @@
-# S3 Bucket for Teacher Frontend
 resource "aws_s3_bucket" "teacher_frontend" {
-  bucket = "${var.project_name}-teacher-frontend-${var.aws_region}"
+  bucket = "${var.project_name}-teacher-app-${var.aws_region}"
   force_destroy = true
 }
 
