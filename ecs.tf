@@ -123,6 +123,9 @@ resource "aws_ecs_service" "main" {
   task_definition = aws_ecs_task_definition.app.arn
   desired_count   = var.app_count
   launch_type     = "FARGATE"
+  lifecycle {
+    ignore_changes = [task_definition]
+  }
 
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent         = 200
@@ -132,8 +135,8 @@ resource "aws_ecs_service" "main" {
 
   network_configuration {
     security_groups  = [aws_security_group.ecs_tasks.id]
-    subnets          = aws_subnet.public.*.id
-    assign_public_ip = true
+    subnets          = aws_subnet.private.*.id
+    assign_public_ip = false
   }
 
 

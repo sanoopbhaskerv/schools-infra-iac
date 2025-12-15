@@ -16,3 +16,13 @@ output "ecs_service_name" {
 output "rds_endpoint" {
   value = aws_db_instance.main.address
 }
+
+output "rabbitmq_endpoint" {
+  description = "AMQP over TLS endpoint for the RabbitMQ broker"
+  value       = aws_mq_broker.rabbitmq.instances[0].endpoints[0]
+}
+
+output "rabbitmq_security_group_id" {
+  description = "Security group applied to the RabbitMQ broker"
+  value       = aws_security_group.mq.id
+}

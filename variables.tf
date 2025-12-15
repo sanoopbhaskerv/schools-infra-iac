@@ -88,3 +88,27 @@ variable "db_password" {
   sensitive   = true
   # No default value to prevent committing secrets to git
 }
+
+variable "mq_username" {
+  description = "RabbitMQ broker username"
+  type        = string
+  default     = "schooladmin"
+}
+
+variable "mq_password" {
+  description = "RabbitMQ broker password"
+  type        = string
+  sensitive   = true
+}
+
+variable "mq_engine_version" {
+  description = "Amazon MQ RabbitMQ engine version"
+  type        = string
+  default     = "3.13"
+}
+
+variable "mq_instance_type" {
+  description = "Amazon MQ instance size"
+  type        = string
+  default     = "mq.t3.micro"
+}
