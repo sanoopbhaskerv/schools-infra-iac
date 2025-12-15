@@ -60,6 +60,31 @@ resource "aws_security_group" "ecs_tasks" {
     self            = true
   }
 
+  # Service-to-service access for internal calls (Cloud Map)
+  ingress {
+    protocol        = "tcp"
+    from_port       = 8085
+    to_port         = 8085
+    security_groups = [aws_security_group.ecs_tasks.id]
+    self            = true
+  }
+
+  ingress {
+    protocol        = "tcp"
+    from_port       = 8086
+    to_port         = 8086
+    security_groups = [aws_security_group.ecs_tasks.id]
+    self            = true
+  }
+
+  ingress {
+    protocol        = "tcp"
+    from_port       = 8087
+    to_port         = 8087
+    security_groups = [aws_security_group.ecs_tasks.id]
+    self            = true
+  }
+
   egress {
     protocol    = "-1"
     from_port   = 0
