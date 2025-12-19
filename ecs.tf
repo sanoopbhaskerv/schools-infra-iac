@@ -122,7 +122,13 @@ resource "aws_ecs_service" "main" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.app.arn
   desired_count   = var.app_count
-  launch_type     = "FARGATE"
+  # launch_type     = "FARGATE"
+  
+  capacity_provider_strategy {
+    capacity_provider = "FARGATE_SPOT"
+    weight            = 100
+  }
+
   lifecycle {
     ignore_changes = [task_definition]
   }
@@ -136,7 +142,7 @@ resource "aws_ecs_service" "main" {
   network_configuration {
     security_groups  = [aws_security_group.ecs_tasks.id]
     subnets          = aws_subnet.private.*.id
-    assign_public_ip = false
+    assign_public_ip = true
   }
 
 

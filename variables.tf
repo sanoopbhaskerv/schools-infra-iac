@@ -31,11 +31,7 @@ variable "private_subnet_cidrs" {
   default     = ["10.0.11.0/24", "10.0.12.0/24"]
 }
 
-variable "single_nat_gateway" {
-  description = "Use a single NAT gateway for all private subnets"
-  type        = bool
-  default     = true
-}
+# variable "single_nat_gateway" removed for cost optimization
 
 variable "app_port" {
   description = "Port exposed by the docker image"
