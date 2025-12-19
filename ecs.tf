@@ -102,6 +102,14 @@ resource "aws_ecs_task_definition" "app" {
         {
           name  = "SPRING_R2DBC_PASSWORD"
           value = var.db_password
+        },
+        {
+           name  = "IDENTITY_SERVICE_HOST"
+           value = "identity-service.school.local"
+        },
+        {
+           name = "IDENTITY_SERVICE_PORT"
+           value = "8084"
         }
       ]
       logConfiguration = {
